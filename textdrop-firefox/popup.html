@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TextDrop</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>TextDrop</h1>
+    <span id="count" class="count" aria-live="polite"></span>
+  </header>
+
+  <section class="add">
+    <label class="sr" for="newText">New text</label>
+    <textarea id="newText" rows="3" placeholder="Type or paste text to keep. Length is unlimited."></textarea>
+    <div class="row">
+      <span id="addHint" class="hint">Ctrl+Enter to add</span>
+      <button id="addBtn" class="primary" type="button">Add to list</button>
+    </div>
+  </section>
+
+  <ul id="list" class="list"></ul>
+  <p id="empty" class="empty" hidden>Your list is empty. Add text above, or select text on any page and press Alt+Shift+S.</p>
+
+  <div id="undo" class="undo" hidden>
+    <span>Item deleted.</span>
+    <button id="undoBtn" type="button">Undo</button>
+  </div>
+
+  <details id="settings">
+    <summary>Settings</summary>
+
+    <div class="field">
+      <label for="maxItems">Maximum items</label>
+      <input id="maxItems" type="number" min="1" max="500" step="1">
+    </div>
+
+    <label class="check">
+      <input id="showPanel" type="checkbox">
+      <span>Show the list on web pages</span>
+    </label>
+
+    <div class="field">
+      <label for="startState">When a page loads, the list is</label>
+      <select id="startState">
+        <option value="remember">As I left it</option>
+        <option value="open">Open</option>
+        <option value="collapsed">Collapsed</option>
+      </select>
+    </div>
+
+    <fieldset class="group">
+      <legend>When a text box already has text</legend>
+      <label class="check"><input type="radio" name="insertMode" value="cursor"><span>Add at the cursor</span></label>
+      <label class="check"><input type="radio" name="insertMode" value="append"><span>Add at the end</span></label>
+      <label class="check"><input type="radio" name="insertMode" value="replaceLast"><span>Replace what I inserted last time</span></label>
+      <label class="check"><input type="radio" name="insertMode" value="replaceAll"><span>Replace everything in the box</span></label>
+    </fieldset>
+
+    <div class="group">
+      <label class="check">
+        <input id="pressEnter" type="checkbox">
+        <span>Press Enter after inserting</span>
+      </label>
+      <p class="note">Sends chat messages, submits forms and runs searches. Skipped if the site rejected the text.</p>
+    </div>
+
+    <div class="group">
+      <label class="check">
+        <input id="unlockSite" type="checkbox">
+        <span>Unlock right-click, copy and paste on <b id="host">this site</b></span>
+      </label>
+      <label class="check">
+        <input id="unlockAll" type="checkbox">
+        <span>Unlock them on every site</span>
+      </label>
+      <p class="note">Clicking an item works without this. Unlocking also makes Ctrl+C, Ctrl+V and the right-click menu work on sites that block them, but can break editors that handle paste themselves.</p>
+    </div>
+
+    <div class="group">
+      <label class="check">
+        <input id="typeMode" type="checkbox">
+        <span>Insert one character at a time</span>
+      </label>
+      <div id="delayField" class="field" hidden>
+        <label for="typeDelay">Delay per character (ms)</label>
+        <input id="typeDelay" type="number" min="0" max="500" step="1">
+      </div>
+      <p class="note">Slower, but works on the few sites that reject text arriving all at once.</p>
+    </div>
+
+    <p class="note keys">Alt+Shift+V opens or closes the list on a page. Alt+Shift+S saves the selected text. Change shortcuts in your browser's extension shortcut settings.</p>
+  </details>
+
+  <script src="popup.js"></script>
+</body>
+</html>
