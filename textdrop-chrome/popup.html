@@ -9,8 +9,15 @@
 <body>
   <header>
     <h1>TextDrop</h1>
+    <label class="switch" title="Turn TextDrop on or off">
+      <input id="powerToggle" type="checkbox">
+      <span class="slider" aria-hidden="true"></span>
+      <span class="sr">Turn TextDrop on or off</span>
+    </label>
     <span id="count" class="count" aria-live="polite"></span>
   </header>
+
+  <p id="offNote" class="note offNote" hidden>TextDrop is off. The on-page list and shortcuts are disabled on every site until you turn it back on. You can still manage your saved text below.</p>
 
   <section class="add">
     <label class="sr" for="newText">New text</label>

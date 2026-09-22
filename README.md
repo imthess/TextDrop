@@ -5,7 +5,6 @@ A browser extension that keeps a list of text snippets and inserts any of them i
 ## Install
 
 **Chrome, Chromium, Brave, Edge (folder `textdrop-chrome`)**
-
 1. Unzip, then open `chrome://extensions` (Brave: `brave://extensions`, Edge: `edge://extensions`).
 2. Turn on **Developer mode** (top right).
 3. Click **Load unpacked** and choose the `textdrop-chrome` folder.
@@ -13,7 +12,6 @@ A browser extension that keeps a list of text snippets and inserts any of them i
 5. Refresh any tabs that were already open.
 
 **Firefox (folder `textdrop-firefox`)**
-
 1. Open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on**, choose `manifest.json` inside the folder. (Temporary add-ons vanish when Firefox closes; a permanent install needs the add-on signed by Mozilla, or Firefox Developer/Nightly/ESR with `xpinstall.signatures.required` set to false.)
 2. Open `about:addons`, select TextDrop, open **Permissions**, and turn on "Access your data for all websites". Firefox leaves this off by default and the extension cannot see pages without it.
 
@@ -42,7 +40,6 @@ A browser extension that keeps a list of text snippets and inserts any of them i
 Clicking an item never uses the clipboard or a paste event, so there is nothing for the site to block. It works the same way as typing.
 
 Under **Settings** there are two extra options:
-
 - **Unlock right-click, copy and paste** (per site or everywhere): stops the site's scripts from cancelling those actions, so your own Ctrl+C, Ctrl+V and right-click menu work again. Off by default because it can break editors that handle paste themselves.
 - **Insert one character at a time**: for the few sites that reject text arriving all at once.
 

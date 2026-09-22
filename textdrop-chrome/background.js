@@ -139,6 +139,9 @@ api.commands.onCommand.addListener(async (command, tab) => {
   }
   if (!tab?.id) return;
 
+  const { enabled = true } = await api.storage.local.get('enabled');
+  if (!enabled) return;
+
   if (command === 'toggle-panel') {
     await toFrame(tab.id, 0, { type: 'togglePanel' });
   } else if (command === 'save-selection') {

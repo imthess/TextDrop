@@ -43,6 +43,8 @@ async function load() {
   lastSaved = JSON.stringify(items);
 
   $('maxItems').value = maxItems;
+  $('powerToggle').checked = s.enabled !== false;
+  $('offNote').hidden = s.enabled !== false;
   $('showPanel').checked = !s.panelHidden;
   $('startState').value = s.startState || 'remember';
   const mode = s.insertMode || 'cursor';
@@ -188,6 +190,12 @@ $('maxItems').addEventListener('change', () => {
   maxItems = n;
   api.storage.local.set({ maxItems: n });
   updateCount();
+});
+
+$('powerToggle').addEventListener('change', () => {
+  const enabled = $('powerToggle').checked;
+  $('offNote').hidden = enabled;
+  api.storage.local.set({ enabled });
 });
 
 $('showPanel').addEventListener('change', () => {

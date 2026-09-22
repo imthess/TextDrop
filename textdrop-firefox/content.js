@@ -16,6 +16,7 @@
   const DEFAULTS = {
     items: [],
     maxItems: 20,
+    enabled: true,
     panelHidden: false,
     collapsed: true,
     pos: null, // { r, b } distance from right / bottom edge
@@ -89,7 +90,7 @@
   }, true);
 
   function updateUnlock() {
-    unlockOn = !!(state.unlockAll || (state.unlockHosts || []).includes(location.hostname));
+    unlockOn = !!state.enabled && !!(state.unlockAll || (state.unlockHosts || []).includes(location.hostname));
     if (unlockOn && !unlockStyle) {
       unlockStyle = document.createElement('style');
       unlockStyle.textContent =
@@ -715,7 +716,7 @@
 
   function renderPanel() {
     if (!ui) return;
-    ui.host.style.setProperty('display', state.panelHidden ? 'none' : 'block', 'important');
+    ui.host.style.setProperty('display', (state.panelHidden || !state.enabled) ? 'none' : 'block', 'important');
     ui.wrap.classList.toggle('collapsed', !!state.collapsed && !stale);
     ui.wrap.classList.toggle('stale', stale);
     ui.titleEl.textContent = stale ? 'Reload needed' : 'TextDrop';
@@ -865,16 +866,18 @@
   api.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg && msg.type) {
       case 'doInsert':
+        if (!state.enabled) { sendResponse({ ok: false, reason: 'TextDrop is turned off.' }); return false; }
         insertText(msg.text).then(sendResponse, (e) => sendResponse({ ok: false, reason: String(e) }));
         return true;
       case 'startPick':
+        if (!state.enabled) { sendResponse({ ok: false }); return false; }
         sendResponse({ ok: startPick(null) });
         return false;
       case 'cancelPick':
         cancelPick();
         return false;
       case 'togglePanel':
-        if (IS_TOP) togglePanel();
+        if (IS_TOP && state.enabled) togglePanel();
         return false;
       case 'toast':
         if (IS_TOP) toast(msg.text, msg.kind);
